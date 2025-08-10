@@ -1,0 +1,24 @@
+npm install --save-dev @types/node (to download node types for typescript, such as the filesystem/fs module)
+
+--mkcert--
+1) create a root CA "mkcert -install"
+2) generate server certificate and key with "mkcert localhost" 
+
+--typescript--
+1) compile project with "npx tsc" (cannot compile the exact file or it ignores tsconfig)
+2) run it with node in /dist/
+
+--prisma--
+baseline current:
+1) mkdir -p prisma/migrations/0_init
+2) npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/0_init/migration.sql
+3) npx prisma migrate resolve --applied 0_init
+
+change table structure:
+1) npx prisma migrate dev
+
+fix but drop data:
+1) npx prisma migrate reset
+
+update from db:
+1) npx prisma db pull

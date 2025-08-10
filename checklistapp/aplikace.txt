@@ -1,0 +1,33 @@
+Java (old and hard, but got offers) / Kotlin (meh arrow functions, got offers) / C# (also fine, got offers) / React Native (could be cool, some offers) / Flutter (good, not many offers) / Swift (iOS XD, so no)
+propably in Flutter, looks good for its UI defaults
+count tracker (preset and manual)
+make thumbnails, also support gif
+vscode (CTRL+P!), android studio (flutter run/create, sdkmanager)
+pages: overview, new activity (choose from prefabs), create prefab (image, name, descr.), calendar (with clickable history), history (exportable), + library (variable) file
+https://www.youtube.com/watch?v=D4nhaszNW4o
+
+write in lib (dart file)
+sdkmanager "system-images;android-27;google_apis_playstore;x86"
+./gradlew clean (in android)
+./gradlew build
+
+Scaffold => takes up the whole screen, you add Widgets to it (stateful-redrawable and stateless-static)
+Fonts => change in pubspec.yaml, flutter pub get, change theme in MaterialApp params
+Debug Banner => remove in main (in MaterialApp parameters)
+Text => Text("hmm", style: TextStyle(color:, fontSize, fontWeight))
+Shadow => elevation:
+Libraries => pubspec.yaml (dependencies: )
+SVGs => Container(child: SvgPicture.asset(''), decoration: BoxDecoration()), wrap with GestureDetector(onTap: (), ...) for button
+Imports => create assets folder, put in files, add to assets: in pubspec.yaml
+ExtractMethod => click light bulb next to appBar/body/child... will create a function and only leave a call to it
+Decoration => most of the would be CSS goes here, such as shadows, borders, colors, padding, gradients, also icons
+Alignment => mainAxisAlignment (left-right + spacing in Row), crossAxisAlignment (top-down in Row), in Column its reversed
+Preset Text => hintText, you might need to set width of the element first
+Padding => can be used as a wrapper as well, set it in the padding: property
+Item Builder => ListView.builder(itemBuilder: (context, index) {return Container();}), you can create a list (List<class>) of a custom class with the desired data you want to put into the elements (use a func to load them from the storage), you can put the load func into a static library for simplicity
+ListView => either builder (just items) or separated (adds a separatorBuilder for gaps between elements)
+? operator => for oneliner ifs (bool ? true : false)
+IgnorePointer => disables interaction using clicking/touching
+ShrinkWrap => not certain what it does, but supposedly its inferior to scrollView or something
+
+1) hlavní stránka (testovně uložit do internal storage data a ty pak dynamicky loadnout jako widgety)

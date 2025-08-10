@@ -1,0 +1,4 @@
+commands:
+flutter emulators to see list
+flutter emulators --launch my_own
+flutter run

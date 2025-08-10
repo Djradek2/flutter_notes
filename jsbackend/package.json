@@ -1,0 +1,21 @@
+{
+  "name": "jsbackend",
+  "version": "1.0.0",
+  "description": "Backend to serve and save notes from a Flutter app.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.13.0",
+    "express": "^5.1.0",
+    "prisma": "^6.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "typescript": "^5.9.2"
+  }
+}

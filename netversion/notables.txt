@@ -1,0 +1,2 @@
+1) run with urls to allow non-localhost connections:
+dotnet run --urls "http://0.0.0.0:5277"

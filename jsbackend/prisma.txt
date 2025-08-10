@@ -1,0 +1,13 @@
+baseline current:
+1) mkdir -p prisma/migrations/0_init
+2) npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/0_init/migration.sql
+3) npx prisma migrate resolve --applied 0_init
+
+change table structure:
+1) npx prisma migrate dev
+
+fix but drop data:
+1) npx prisma migrate reset
+
+update from db:
+1) npx prisma db pull

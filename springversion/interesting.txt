@@ -1,0 +1,9 @@
+in order to have maven automatically decide versions of packages you need to add a parent
+
+in this case:
+<parent>
+  <groupId> org.springframework.boot </groupId>
+  <artifactId> spring-boot-starter-parent </artifactId>
+  <version> 3.5.3 </version>
+  <relativePath/>
+</parent>
