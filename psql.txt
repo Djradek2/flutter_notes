@@ -1,0 +1,2 @@
+copy tables across DBs:
+pg_dump -U postgres -t users -d NotesApp | psql -U postgres -d NotesAppJava

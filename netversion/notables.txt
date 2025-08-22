@@ -1,2 +1,13 @@
 1) run with urls to allow non-localhost connections:
 dotnet run --urls "http://0.0.0.0:5277"
+
+2) generate ORM:
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 7.0.0
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 7.0.0
+env var = "Host=localhost;Port=5432;Database=NotesAppNET;Username=postgres;Password=YOUR_PASSWORD;Timeout=300;"
+dotnet ef dbcontext scaffold $env:NET_CONNECT_STRING Npgsql.EntityFrameworkCore.PostgreSQL -o Models --no-onconfiguring
+dotnet restore
+
+3) connection string management:
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0.0
+https://learn.microsoft.com/cs-cz/ef/core/miscellaneous/connection-strings?tabs=dotnet-core-cli

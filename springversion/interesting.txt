@@ -1,3 +1,5 @@
+mvn install
+
 in order to have maven automatically decide versions of packages you need to add a parent
 
 in this case:

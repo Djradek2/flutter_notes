@@ -1,0 +1,11 @@
+Drizzle:
+npx drizzle-kit push -> uploads from local
+npx drizzle-kit introspect -> recreates from db
+
+holy shit its 100x prisma's peak already - 1 issue, it generates a relations.ts import without the ESM wanted .js
+typescript has a type package for most packages
+this won't have HTTPS, dont run it as production code obviously
+
+Plán (nejdříve jenom Express backend):
+aplikace - vygenerovat JSON pro zálohu, poslat login údaje, uložit token s 1 hod časovým razítkem, načíst JSON data z přijaté odpovědi
+server - vygenerovat JSON z DB dat, login endpoint a load/save backup endpointy, schopnost generovat tokeny
