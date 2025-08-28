@@ -36,8 +36,8 @@ class _NotesPageState extends State<NotesPage> {
       ),
       floatingActionButton: FloatingActionButton(
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
-        onPressed: NoteSync.fetchFromApi,
-        //onPressed: createNote,
+        //onPressed: NoteSync.fetchFromApi,
+        onPressed: createNote,
         child: const Icon(Icons.add),
       ),
       drawer: MyDrawer(),
@@ -60,7 +60,9 @@ class _NotesPageState extends State<NotesPage> {
                 return NoteTile(
                   text: note.text, 
                   onEditPressed: () => updateNote(note), 
-                  onDeletePressed: () => deleteNote(note.id),
+                  onDeletePressed: () => {
+                    deleteNote(note.id)
+                  },
                 );
               },
             ),

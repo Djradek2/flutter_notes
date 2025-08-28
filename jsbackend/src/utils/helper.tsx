@@ -5,15 +5,30 @@ import { member, notes } from "../drizzle/migrations/schema.js";
 import { db } from '../drizzle/db.js';
 import type Note from '../types/note.js'
 
+type JSON_note = {
+  notes: [{
+    title: string;
+    text: string;
+  }]
+};
+
 // selects all notes of given user in db and returns them as a JSON object
 // in - userID 
 // output - JSON object
 async function getUserNotes (user_id : number) {
   try {
     const results = await db
-    .select()
+    .select({
+      title: notes.title,
+      text: notes.text
+    })
     .from(notes)
-    .where(eq(notes.userId, user_id));
+    .where(
+      and(
+        eq(notes.userId, user_id),
+        eq(notes.active, true)
+      )
+    );
     return results; //JSON.stringify(results)
   } catch (err) {
     console.error("DB select failed: ", err)
@@ -24,8 +39,8 @@ async function getUserNotes (user_id : number) {
 //wipes all notes of given user in db -> inserts all of the json data as notes -> return success bool
 //in - userID, JSON string containing all of user's saved notes
 //output - success boolean
-async function backupToDB (user_id : number, json_string : string) {
-  var json_data = JSON.parse(json_string)
+async function backupToDB (user_id : number, json_data : JSON_note) {
+  //var json_data = JSON.parse(json_string) //json_string is propably already an object
 
   try {
     await db
@@ -37,7 +52,7 @@ async function backupToDB (user_id : number, json_string : string) {
     return false
   }
 
-  for (const note_instance of json_data) {
+  for (const note_instance of json_data.notes) {
     try {
       await db
       .insert(notes)

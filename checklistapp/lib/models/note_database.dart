@@ -18,7 +18,9 @@ class NoteDatabase extends ChangeNotifier {
 
   //add
   Future<void> addNote(String textFromUser) async {
-    final newNote = Note()..text = textFromUser;
+    var newNote = Note(); //Note()..text = textFromUser;
+    newNote.text = textFromUser;
+    newNote.title = "Unimplemented"; //TODO: add a way to set titles
     await isar.writeTxn(() => isar.notes.put(newNote));
     fetchNotes();
   } 
@@ -44,6 +46,13 @@ class NoteDatabase extends ChangeNotifier {
   //remove
   Future<void> deleteNote(int id) async {
     await isar.writeTxn(() => isar.notes.delete(id));
+    await fetchNotes();
+  }
+
+  //clear all
+  Future<void> clearNotes() async {
+    await isar.writeTxn(() => isar.notes.clear());
+    currentNotes.clear();
     await fetchNotes();
   }
 }

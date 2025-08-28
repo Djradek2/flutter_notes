@@ -1,3 +1,4 @@
+import 'package:checklistapp/models/database_sync.dart';
 import 'package:checklistapp/models/note_database.dart';
 import 'package:checklistapp/pages/notes_page.dart';
 import 'package:checklistapp/theme/theme_provider.dart';
@@ -13,6 +14,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => NoteDatabase()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => NoteSync()),
       ],
       child: const MyApp(),
     )

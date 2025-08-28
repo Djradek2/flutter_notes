@@ -1,8 +1,6 @@
 import { pgTable, serial, varchar, timestamp, foreignKey, integer, boolean } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
-
-
 export const member = pgTable("member", {
 	id: serial().primaryKey().notNull(),
 	name: varchar({ length: 255 }).notNull(),
