@@ -49,8 +49,8 @@ class SettingsPage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            Divider(),
+            const SizedBox(height: 10),
+            Divider(color: Theme.of(context).colorScheme.inversePrimary),
             const SizedBox(height: 10),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -58,18 +58,36 @@ class SettingsPage extends StatelessWidget {
               children: [
                 TextField(
                   controller: usernameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Username",
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    ),
                     border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.inversePrimary), // not focused
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.inversePrimary), // same as enabled
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Password",
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    ),
                     border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.inversePrimary), // not focused
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.inversePrimary), // same as enabled
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -92,36 +110,46 @@ class SettingsPage extends StatelessWidget {
                 ),
               ],
             ),
-            context.watch<NoteSync>().jwtToken == null ? Container() : SizedBox(height: 12), Divider(), SizedBox(height: 10), Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    await context.read<NoteSync>().backupNotes(context, context.read<NoteDatabase>());
-                  },
-                  child: Text(
-                    "Save Backup",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await context.read<NoteSync>().restoreNotes(context, context.read<NoteDatabase>());
-                  },
-                  child: Text(
-                    "Load Backup",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                ),
-              ],
-            )
+            Visibility(
+              visible: context.watch<NoteSync>().jwtToken != null, 
+              child: Column(
+                children: [
+                  SizedBox(height: 10), 
+                  Divider(color: Theme.of(context).colorScheme.inversePrimary), 
+                  SizedBox(height: 10), 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () async {
+                          await context.read<NoteSync>().backupNotes(context, context.read<NoteDatabase>());
+                        },
+                        child: Text(
+                          "Save Backup",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await context.read<NoteSync>().restoreNotes(context, context.read<NoteDatabase>());
+                        },
+                        child: Text(
+                          "Load Backup",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ) 
           ],
         )
       )

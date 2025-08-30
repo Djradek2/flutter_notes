@@ -7,7 +7,7 @@ import { db } from './drizzle/db.js';
 import { member, notes } from './drizzle/migrations/schema.js';
 import { migrate } from 'drizzle-orm/node-postgres/migrator' 
 import postgres from 'postgres';
-import { lt } from 'drizzle-orm';
+import { eq, lt } from 'drizzle-orm';
 import { getUserNotes, backupToDB } from './utils/helper.js'
 import type { Request } from "express";
 
@@ -17,10 +17,8 @@ interface UserRequest extends Request {
 
 function authenticate (req: any, res: any, next: Function) { //authenticates, but doesn't handle authorization
   const token = req.headers['authorization'];
-  // const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) return res.sendStatus(401);
-
 
   jwt.verify(token, process.env.JWT_SECRET as string, (err: any, payload: any) => {
     if (err) return res.sendStatus(403);
@@ -42,7 +40,14 @@ app.get('/', async (req, res) => { //TODO: remove, debug endpoint
 app.post('/login', async (req, res) => {
   const { username: req_username, password: req_password } = req.body;
   
-  const users = await db //you should look for the user through db, not parse everyone on the server
+  if (typeof req_username !== "string" || typeof req_password !== "string") {
+    return res.status(400).json({ error: "Invalid input!" });
+  }
+  if (req_username.length > 1024 || req_password.length > 1024) {
+    return res.status(400).json({ error: "Input too long!" });
+  }
+
+  const users = await db
   .select({
     id: member.id,
     name: member.name,
@@ -50,8 +55,10 @@ app.post('/login', async (req, res) => {
     createdAt: member.createdAt,
   })
   .from(member)
+  .where(eq(member.name, req_username))
+  .limit(1)
 
-  const user = users.find(u => u.name === req_username); // TODO: not certain this works
+  const user = users.find(u => u.name === req_username); //TODO: get the [0] index from users more nicely
   if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
   const isMatch = await bcrypt.compare(req_password, user.password);

@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:checklistapp/models/note.dart';
 import 'package:checklistapp/models/note_database.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class NoteSync with ChangeNotifier {
@@ -24,9 +22,8 @@ class NoteSync with ChangeNotifier {
         })
       ).timeout(Duration(seconds: 5)); 
       if (httpResponse.statusCode == 401) {
-        //TODO: invalid credentials, display error message
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Invalid Credentials")),
+          SnackBar(content: Text("Invalid Credentials!")),
         );
         return;
       }
@@ -41,7 +38,7 @@ class NoteSync with ChangeNotifier {
       return;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Could not contact server")),
+        SnackBar(content: Text("Could not contact server.")),
       );
     }
   }
@@ -67,14 +64,18 @@ class NoteSync with ChangeNotifier {
       ).timeout(Duration(seconds: 5)); 
       if (httpResponse.statusCode == 401 || httpResponse.statusCode == 403) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Invalid Authorization Token!")),
+          SnackBar(content: Text("Login timed out!")),
         );
-        //TODO: incorrect token, remove it via middleware, display error message
+        jwtToken = null;
         return;
       }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Notes saved!")),
+      );
     } else {
-      print("null token");
-      //TODO: null token, please login message 
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please Login.")),
+      );
     }
   }
 
@@ -88,12 +89,18 @@ class NoteSync with ChangeNotifier {
         }
       ).timeout(Duration(seconds: 5)); 
       if (httpResponse.statusCode == 401 || httpResponse.statusCode == 403) {
-        //TODO: incorrect token, remove it via middleware, display error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Login timed out!")),
+        );
+        jwtToken = null;
         return;
       }
       final receivedData = jsonDecode(httpResponse.body);
       if (!receivedData.containsKey('data')) {
-        //TODO: failed to load or there is no backup, display error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("You have no backup saved.")),
+        );
+        return;
       }
       if (!context.mounted) return; //checks if user is still on the backup screen
 
@@ -101,8 +108,13 @@ class NoteSync with ChangeNotifier {
       for (final note in receivedData['data']) {
         notes.addNote(note['text']); //TODO: replace with a single bulk add function
       }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Backups restored!")),
+      );
     } else {
-      //TODO: null token, please login message 
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please Login.")),
+      );
     }
   }
 }

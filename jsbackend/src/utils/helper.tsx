@@ -3,18 +3,11 @@
 import { and, eq } from "drizzle-orm";
 import { member, notes } from "../drizzle/migrations/schema.js";
 import { db } from '../drizzle/db.js';
-import type Note from '../types/note.js'
-
-type JSON_note = {
-  notes: [{
-    title: string;
-    text: string;
-  }]
-};
+import type { JSON_notes } from "../types/JSON_notes.js";
 
 // selects all notes of given user in db and returns them as a JSON object
-// in - userID 
-// output - JSON object
+// @param userID 
+// @returns JSON - object
 async function getUserNotes (user_id : number) {
   try {
     const results = await db
@@ -36,12 +29,11 @@ async function getUserNotes (user_id : number) {
   }
 }
 
-//wipes all notes of given user in db -> inserts all of the json data as notes -> return success bool
-//in - userID, JSON string containing all of user's saved notes
-//output - success boolean
-async function backupToDB (user_id : number, json_data : JSON_note) {
-  //var json_data = JSON.parse(json_string) //json_string is propably already an object
-
+// wipes all notes of user in db -> inserts json data as new notes -> return success bool
+// @param user_id
+// @param json_data - JSON containing all of the user's saved notes, app.use(express.json()) converts it to an object automatically
+// @returns Boolean
+async function backupToDB (user_id : number, json_data : JSON_notes) {
   try {
     await db
     .update(notes)
