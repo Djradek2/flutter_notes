@@ -5,3 +5,9 @@ flutter run
 
 generate ISAR types:
 flutter pub run build_runner build
+
+gradleW thingy:
+cd android
+./gradlew :app:dependencies
+
+lstar missing -> I have no clue how to fix, seems like ISAR is just really dead
