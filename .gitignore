@@ -13,3 +13,8 @@ netversion/bin/Debug/net7.0
 !netversion/bin/Debug/appsettings.json
 !netversion/bin/Debug/appsettings.Development.json
 jsbackend/.env
+.vscode/launch.json
+.vscode/settings.json
+netversion/bin/Debug/net7.0/appsettings.Development.json
+netversion/appsettings.json
+netversion/appsettings.Development.json
