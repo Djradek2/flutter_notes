@@ -32,7 +32,7 @@ the config:
     <generator>
         <database>
             <name>org.jooq.meta.postgres.PostgresDatabase</name>
-            <includes>.*</includes>
+            <includes>public\..*</includes>
             <excludes></excludes>
         </database>
         <target>
