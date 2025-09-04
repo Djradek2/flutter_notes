@@ -16,7 +16,9 @@ interface UserRequest extends Request {
 }
 
 function authenticate (req: any, res: any, next: Function) { //authenticates, but doesn't handle authorization
-  const token = req.headers['authorization'];
+  const authHeader = req.headers['authorization'];
+
+  const token = authHeader.split(' ')[1];
 
   if (!token) return res.sendStatus(401);
 

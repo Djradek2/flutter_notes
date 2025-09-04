@@ -11,3 +11,5 @@ dotnet restore
 3) connection string management:
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0.0
 https://learn.microsoft.com/cs-cz/ef/core/miscellaneous/connection-strings?tabs=dotnet-core-cli
+
+4) ChatGPT is pretty good at transpiling, you still have to know what is going though

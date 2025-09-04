@@ -48,30 +48,23 @@ app.MapPost("/", async ([FromServices] NotesAppNetContext db) => {
 // ------------------- LOGIN -------------------
 
 app.MapPost("/login", async ([FromBody] LoginRequest req, [FromServices] NotesAppNetContext db) => {
-  Console.WriteLine("1");
   if (string.IsNullOrWhiteSpace(req.Username) || string.IsNullOrWhiteSpace(req.Password))
   {
     return Results.BadRequest(new { error = "Invalid input!" });
   }
-  Console.WriteLine("2");
   if (req.Username.Length > 1024 || req.Password.Length > 1024) {
     return Results.BadRequest(new { error = "Input too long!" });
   }
-  Console.WriteLine("3");
   var user = await db.Members.FirstOrDefaultAsync(m => m.Name == req.Username);
-  Console.WriteLine("4");
   if (user == null) {
     return Results.Unauthorized();
   }
-  Console.WriteLine("5");
   bool isMatch = BCrypt.Net.BCrypt.Verify(req.Password, user.Password);
   if (!isMatch) {
     return Results.Unauthorized();
   }
-  Console.WriteLine("6");
   var tokenHandler = new JwtSecurityTokenHandler();
   var key = Encoding.UTF8.GetBytes(config["JWT_SECRET"] ?? "super_secret");
-  Console.WriteLine("7");
   var tokenDescriptor = new SecurityTokenDescriptor {
     Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
     Expires = DateTime.UtcNow.AddHours(1),
