@@ -16,7 +16,7 @@ import notesbackend.dto.BackupRequest;
 import notesbackend.service.NotesService;
 
 @RestController
-@RequestMapping("/notes")
+//@RequestMapping("/notes")
 public class NotesController {
     @Autowired private NotesService notesService;
 

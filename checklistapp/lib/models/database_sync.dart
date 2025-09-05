@@ -12,7 +12,7 @@ class NoteSync with ChangeNotifier {
   Future<void> loginToAPI(context, String name, String password) async { //http.Response
     try {
       http.Response httpResponse = await http.post(
-        Uri.parse('http://10.0.0.4:3003/login'), //ports: 5 2 7 7 - C#, 3 0 0 3 - Express
+        Uri.parse('http://10.0.0.4:8082/login'), //ports: 5 2 7 7 - C#, 3 0 0 3 - Express, 8 0 8 2 - Spring
         headers: {
           'Content-Type': 'application/json',
         },
@@ -55,7 +55,7 @@ class NoteSync with ChangeNotifier {
         notesList.add(sendableNote);
       }
       http.Response httpResponse = await http.post(
-        Uri.parse('http://10.0.0.4:3003/backup_notes'),
+        Uri.parse('http://10.0.0.4:8082/backup_notes'),
         headers: {
           'Content-Type': 'application/json',
           'authorization': 'Bearer ' + (jwtToken ?? "0"),
@@ -82,7 +82,7 @@ class NoteSync with ChangeNotifier {
   Future<void> restoreNotes(context, NoteDatabase notes) async {
     if (jwtToken != null) {
       http.Response httpResponse = await http.get(
-        Uri.parse('http://10.0.0.4:3003/reload_backup'),
+        Uri.parse('http://10.0.0.4:8082/reload_backup'),
         headers: {
           'Content-Type': 'application/json',
           'authorization': 'Bearer ' + (jwtToken ?? "0"),

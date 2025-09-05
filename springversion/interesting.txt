@@ -1,5 +1,6 @@
 mvn install
 mvn dependency:resolve
+mvn spring-boot:run
 
 in order to have maven automatically decide versions of packages you need to add a parent
 
@@ -42,3 +43,31 @@ the config:
         </target>
     </generator>
 </configuration>
+
+applications.properties:
+spring.application.name=demo
+server.port=8082
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+spring.thymeleaf.enabled=true
+spring.thymeleaf.check-template-location=true
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/NotesAppJava
+spring.datasource.username=postgres
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+
+jwt.secret=
+
+applications.yml:
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/NotesAppJava
+    username: postgres
+    password: 
+  jooq:
+    sql-dialect: POSTGRES
+
+jwt:
+  secret: "" 

@@ -19,6 +19,8 @@ public class AuthService {
     .where(MEMBER.NAME.eq(username))
     .fetchOne();
 
+    System.out.println(user);
+
     if (user == null) { 
       throw new RuntimeException("Invalid credentials");
     }
