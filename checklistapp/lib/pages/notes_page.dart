@@ -1,6 +1,5 @@
 import 'package:checklistapp/components/drawer.dart';
 import 'package:checklistapp/components/note_tile.dart';
-import 'package:checklistapp/models/database_sync.dart';
 import 'package:checklistapp/models/note.dart';
 import 'package:checklistapp/models/note_database.dart';
 import 'package:flutter/material.dart';

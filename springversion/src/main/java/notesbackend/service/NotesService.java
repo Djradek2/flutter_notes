@@ -1,3 +1,16 @@
+package notesbackend.service;
+
+import java.util.List;
+
+import org.jooq.DSLContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import notesbackend.dto.BackupRequest;
+import notesbackend.dto.NoteDto;
+
+import static notesbackend.jooq.public_.tables.Notes.NOTES;
+
 @Service
 public class NotesService {
   @Autowired private DSLContext dsl;
@@ -5,7 +18,7 @@ public class NotesService {
   public List<NoteDto> getUserNotes(Long userId) {
     return dsl.select(NOTES.TITLE, NOTES.TEXT)
     .from(NOTES)
-    .where(NOTES.USER_ID.eq(userId).and(NOTES.ACTIVE.eq(true)))
+    .where(NOTES.USER_ID.eq(userId.intValue()).and(NOTES.ACTIVE.eq(true)))
     .fetchInto(NoteDto.class);
   }
 
@@ -14,19 +27,19 @@ public class NotesService {
       // mark old notes inactive
       dsl.update(NOTES)
       .set(NOTES.ACTIVE, false)
-      .where(NOTES.USER_ID.eq(userId))
+      .where(NOTES.USER_ID.eq(userId.intValue()))
       .execute();
 
       // insert new notes
       for (NoteDto note : backup.getNotes()) {
         dsl.insertInto(NOTES, NOTES.USER_ID, NOTES.TITLE, NOTES.TEXT, NOTES.ACTIVE)
-        .values(userId, note.getTitle(), note.getText(), true)
+        .values(userId.intValue(), note.getTitle(), note.getText(), true)
         .execute();
       }
 
       // remove old inactive notes
       dsl.deleteFrom(NOTES)
-      .where(NOTES.USER_ID.eq(userId).and(NOTES.ACTIVE.eq(false)))
+      .where(NOTES.USER_ID.eq(userId.intValue()).and(NOTES.ACTIVE.eq(false)))
       .execute();
 
       return true;
