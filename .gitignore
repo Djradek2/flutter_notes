@@ -18,3 +18,5 @@ jsbackend/.env
 netversion/bin/Debug/net7.0/appsettings.Development.json
 netversion/appsettings.json
 netversion/appsettings.Development.json
+springversion/src/main/resources/application.properties
+springversion/src/main/resources/applications.yml
